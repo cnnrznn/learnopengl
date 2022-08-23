@@ -11,4 +11,8 @@ add_subdirectory(glad)
 # Tutorials
 add_subdirectory(getting_started)
 
+# Utility library
+add_subdirectory(util)
+
+# Hello world
 add_executable(learnopengl main.cpp)
