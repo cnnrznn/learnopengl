@@ -1,10 +1,8 @@
-## Building
+# learnopengl
 
-1. Download the src for [glfw](https://www.glfw.org/download.html). Move here and unzip
-2.  Build glfw 
+A repository for following the online tutorial series
 
-```
-cd glfw-3.3.7
-cmake -S . -B build
-```
-3. Hire people
+## Links
+
+- https://learnopengl.com
+- https://paroj.github.io/gltut/About%20this%20Book.html
