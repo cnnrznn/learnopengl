@@ -3,7 +3,38 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+GLFWwindow* init();
+void fini();
+void render(GLFWwindow*);
+
+
 int main()
+{
+    GLFWwindow* window = init();
+    render(window);
+    fini();
+
+    return 0;
+}
+
+void render(GLFWwindow* window)
+{
+    if (window == NULL)
+    {
+        std::cout << "Will not render to a null window" << std::endl;
+        return;
+    }
+
+    while (!glfwWindowShouldClose(window))
+    {
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+}
+
+GLFWwindow* init()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -14,31 +45,23 @@ int main()
     if (window == NULL)
     {
         std::cout << "Error creating GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
+        return NULL;
     }
 
     glfwMakeContextCurrent(window);
 
-    std::cout << "Created window" << std::endl;
-
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
+        return NULL;
     }
 
     glViewport(0,0,800,600);
 
-    while (!glfwWindowShouldClose(window))
-    {
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    return window;
+}
 
+void fini()
+{
     glfwTerminate();
-
-    return 0;
 }
