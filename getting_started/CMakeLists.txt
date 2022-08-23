@@ -1,2 +1,3 @@
 add_subdirectory(template)
 add_subdirectory(creating_a_window)
+add_subdirectory(hello_triangle)
