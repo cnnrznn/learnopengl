@@ -16,3 +16,8 @@ add_subdirectory(util)
 
 # Hello world
 add_executable(learnopengl main.cpp)
+
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/bin)
+install(TARGETS creating-a-window hello-triangle glfw glad
+    RUNTIME DESTINATION bin
+)
