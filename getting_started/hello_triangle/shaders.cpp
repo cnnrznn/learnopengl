@@ -1,4 +1,4 @@
-const char* vertext_shader = "\
+const char* vertex_shader = "\
 #version 330 core\
 layout (location = 0) in vec3 aPos;\
 \
@@ -8,7 +8,7 @@ void main()\
 }\
 ";
 
-const char* frament_shader = "\
+const char* fragment_shader = "\
 #version 330 core\
 out vec4 fragColor;\
 \
