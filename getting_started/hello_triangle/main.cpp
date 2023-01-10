@@ -12,6 +12,7 @@ void render(GLFWwindow*);
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
+const unsigned int LOG_SIZE = 2048;
 
 int main()
 {
@@ -31,11 +32,8 @@ int main()
 
 void render(GLFWwindow* window)
 {
-    std::cout << "Called render()" << std::endl;
-    std::cout << window << std::endl;
-
     int success;
-    char infoLog[512];
+    char infoLog[LOG_SIZE];
 
     if (window == NULL)
     {
@@ -43,16 +41,14 @@ void render(GLFWwindow* window)
         return;
     }
 
-    std::cout << "Compiling vertex shader..." << std::endl;
-    std::cout << strlen(vertex_shader) << std::endl;
-
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertex_shader, NULL);
     glCompileShader(vertexShader);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << infoLog << std::endl;
+        glGetShaderInfoLog(vertexShader, LOG_SIZE, NULL, infoLog);
+        std::cout << "ERROR: " << infoLog << std::endl;
+        return;
     }
     std::cout << "Compiled vertex shader" << std::endl;
 
@@ -62,8 +58,9 @@ void render(GLFWwindow* window)
     glCompileShader(fragmentShader);
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(fragmentShader, 1024, NULL, infoLog);
-        std::cout << infoLog << std::endl;
+        glGetShaderInfoLog(fragmentShader, LOG_SIZE, NULL, infoLog);
+        std::cout << "ERROR: " << infoLog << std::endl;
+        return;
     }
     std::cout << "Compiled fragment shader" << std::endl;
 
@@ -74,8 +71,9 @@ void render(GLFWwindow* window)
     glLinkProgram(shaderProgram);
     glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(shaderProgram, 1024, NULL, infoLog);
-        std::cout << infoLog << std::endl;
+        glGetProgramInfoLog(shaderProgram, LOG_SIZE, NULL, infoLog);
+        std::cout << "ERROR" << infoLog << std::endl;
+        return;
     }
     std::cout << "Linked shader program" << std::endl;
 
@@ -96,21 +94,26 @@ void render(GLFWwindow* window)
     unsigned int VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    // Load buffer data and assign to attribute index
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+    // unbind VBO and VAO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     std::cout << "Set buffer data" << std::endl;
 
+
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
 
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         glfwSwapBuffers(window);
