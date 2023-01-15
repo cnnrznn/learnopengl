@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string.h>
 
-#include "../../util/util.h"
+#include "util.h"
 #include "shaders.h"
 
 GLFWwindow* init();
