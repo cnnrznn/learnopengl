@@ -1,6 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <iostream>
+
 #include "util.h"
 
 uint compileShaderProgram(
@@ -28,4 +30,37 @@ uint compileShaderProgram(
     glDeleteShader(fragmentShader);
 
     return shaderProgram;
+}
+
+void window_resize_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+GLFWwindow* createWindow(int width, int height)
+{
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(width, height, "", NULL, NULL);
+    if (window == NULL)
+    {
+        std::cerr << "Error creating GLFW window" << std::endl;
+        return NULL;
+    }
+
+    glfwSetFramebufferSizeCallback(window, window_resize_callback);
+    glfwMakeContextCurrent(window);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        return NULL;
+    }
+
+    glViewport(0,0,width, height);
+
+    return window;
 }

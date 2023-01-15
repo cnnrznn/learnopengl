@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 
+#include "../../util/util.h"
 #include "shaders.h"
 
 GLFWwindow* init();
@@ -18,7 +19,7 @@ int main()
 {
     std::cout << "Hello triangle!" << std::endl;
 
-    GLFWwindow* window = init();
+    GLFWwindow* window = createWindow(1280, 720);
     if (!window) {
         std::cout << "Error creating window" << std::endl;
     }
@@ -119,33 +120,6 @@ void render(GLFWwindow* window)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-}
-
-GLFWwindow* init()
-{
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "A window", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Error creating GLFW window" << std::endl;
-        return NULL;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return NULL;
-    }
-
-    glViewport(0,0,SCR_WIDTH, SCR_HEIGHT);
-
-    return window;
 }
 
 void fini()
