@@ -33,4 +33,4 @@
 
 # Build output
 build
-bin
+install
