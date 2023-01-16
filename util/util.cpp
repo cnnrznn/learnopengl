@@ -2,13 +2,32 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
+#include <cstring>
+#include <string>
 
 #include "util.h"
 
+char* shaderFromFile(char* fn)
+{
+    std::ifstream file(fn);
+    std::string contents(
+        (std::istreambuf_iterator<char>(file)),
+        (std::istreambuf_iterator<char>()));
+
+    char* result = new char[contents.size() + 1];
+    strcpy(result, contents.c_str());
+
+    return result;
+}
+
 uint compileShaderProgram(
-    const char* vertexShaderSrc,
-    const char* fragmentShaderSrc
+    char* vertexShaderFn,
+    char* fragmentShaderFn
 ){
+    char* vertexShaderSrc = shaderFromFile(vertexShaderFn);
+    char* fragmentShaderSrc = shaderFromFile(fragmentShaderFn);
+
     uint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);

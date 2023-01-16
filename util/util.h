@@ -1,8 +1,12 @@
+#include <string>
+
 typedef unsigned int uint;
 
+char* shaderFromFile(char* fn);
+
 uint compileShaderProgram(
-    const char* vertexShaderSrc,
-    const char* fragmentShaderSrc
+    char* vertexShaderFn,
+    char* fragmentShaderFn
 );
 
 GLFWwindow* createWindow(int width, int height);
