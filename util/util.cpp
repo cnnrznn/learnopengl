@@ -81,5 +81,13 @@ GLFWwindow* createWindow(int width, int height)
 
     glViewport(0,0,width, height);
 
+    // Uncomment the below line if you want an un-capped framerate.
+    // By default, on my machine, vsync is on.
+    //
+    // https://stackoverflow.com/questions/11312318/my-limited-fps-60
+    // https://www.glfw.org/docs/3.3/group__context.html
+    //
+    //glfwSwapInterval(0);
+
     return window;
 }
