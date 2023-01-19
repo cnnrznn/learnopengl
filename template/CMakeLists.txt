@@ -4,3 +4,4 @@ add_executable(template main.cpp)
 
 target_link_libraries(template glfw)
 target_link_libraries(template glad)
+target_link_libraries(template util)
