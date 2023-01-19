@@ -8,7 +8,7 @@
 
 #include "util.h"
 
-char* shaderFromFile(char* fn)
+char* shaderFromFile(const char* fn)
 {
     std::ifstream file(fn);
     std::string contents(
@@ -22,8 +22,8 @@ char* shaderFromFile(char* fn)
 }
 
 uint compileShaderProgram(
-    char* vertexShaderFn,
-    char* fragmentShaderFn
+    const char* vertexShaderFn,
+    const char* fragmentShaderFn
 ){
     char* vertexShaderSrc = shaderFromFile(vertexShaderFn);
     char* fragmentShaderSrc = shaderFromFile(fragmentShaderFn);
