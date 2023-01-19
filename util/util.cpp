@@ -7,6 +7,7 @@
 #include <string>
 
 #include "util.h"
+#include "stb_image.h"
 
 char* shaderFromFile(const char* fn)
 {
