@@ -17,9 +17,9 @@ int main()
 
     float vertices[] = {
         // positions         // colors
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f, 2,  // bottom right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f, 4,  // bottom left
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f, 0,   // top 
     };
 
     unsigned int VAO, VBO;
@@ -31,10 +31,12 @@ int main()
 
     // Load buffer data and assign to attribute index
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(6*sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     glUseProgram(shaderProgram);
 
@@ -60,6 +62,7 @@ int main()
         float offset = (sin(timeValue) / 2.0f);
         int offsetLocation = glGetUniformLocation(shaderProgram, "offset");
         glUniform1f(offsetLocation, offset);
+        glUniform1f(glGetUniformLocation(shaderProgram, "time"), glfwGetTime());
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
 

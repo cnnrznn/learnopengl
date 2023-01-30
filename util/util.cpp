@@ -26,6 +26,9 @@ uint compileShaderProgram(
     const char* vertexShaderFn,
     const char* fragmentShaderFn
 ){
+    int success;
+    char infoLog[512];
+
     char* vertexShaderSrc = shaderFromFile(vertexShaderFn);
     char* fragmentShaderSrc = shaderFromFile(fragmentShaderFn);
 
@@ -34,10 +37,22 @@ uint compileShaderProgram(
     glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
     glCompileShader(vertexShader);
 
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
     uint fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSrc, NULL);
     glCompileShader(fragmentShader);
+
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
 
     uint shaderProgram;
     shaderProgram = glCreateProgram();

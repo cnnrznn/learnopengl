@@ -75,6 +75,10 @@ int main()
 
     while(!glfwWindowShouldClose(window))
     {
+        float time = glfwGetTime();
+        int timeLoc = glGetUniformLocation(shaderProgram, "time");
+        glUniform1f(timeLoc, time);
+
         processInput(window);
 
         glClearColor(0.8, 0.8, 0.8, 0.1f);
