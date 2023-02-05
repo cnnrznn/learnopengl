@@ -12,6 +12,6 @@ install(TARGETS textures)
 install(DIRECTORY textures_shaders
     DESTINATION bin
 )
-install(FILES container.jpg
+install(FILES container.jpg awesomeface.png
     DESTINATION bin
 )
